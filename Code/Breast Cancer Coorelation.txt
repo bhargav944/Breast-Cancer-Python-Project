@@ -1,0 +1,83 @@
+import numpy as np #for linear algebra
+import pandas as pd #for chopping, processing
+import csv #for opening csv files
+%matplotlib inline 
+import matplotlib.pyplot as plt #for plotting the graphs
+from sklearn.linear_model import LogisticRegression #for logistic regression
+from sklearn.pipeline import Pipeline #to assemble steps for cross validation
+from sklearn.preprocessing import PolynomialFeatures #for all the polynomial features
+from sklearn import svm #for Support Vector Machines
+from sklearn.neighbors import NearestNeighbors #for nearest neighbor classifier
+from sklearn import tree
+from sklearn.tree import DecisionTreeClassifier #for decision tree classifier
+from sklearn.naive_bayes import GaussianNB  #for naive bayes classifier
+from scipy import stats #for statistical info
+from sklearn.model_selection import train_test_split # to split the data in train and test
+from sklearn.model_selection import KFold # for cross validation
+from sklearn.grid_search import GridSearchCV  # for tuning parameters
+from sklearn.neighbors import KNeighborsClassifier  #for k-neighbor classifier
+from sklearn import metrics  # for checking the accuracy 
+from time import time
+
+data = pd.read_csv('Dataset Link');
+
+data.shape
+
+length = len(data)
+#how many features are in the dataset
+features = data.shape[1]-1
+
+# Number of malignant cases
+malignant = len(data[data['diagnosis']=='M'])
+
+#Number of benign cases
+benign = len(data[data['diagnosis']=='B'])
+
+#Rate of malignant tumors over all cases
+rate = (float(malignant)/(length))*100
+
+print "There are "+ str(len(data))+" cases in this dataset"
+print "There are {}".format(features)+" features in this dataset"
+print "There are {}".format(malignant)+" cases diagnosed as malignant tumor"
+print "There are {}".format(benign)+" cases diagnosed as benign tumor"
+print "The percentage of malignant cases is: {:.4f}%".format(rate)
+
+length = len(data)
+#how many features are in the dataset
+features = data.shape[1]-1
+
+# Number of malignant cases
+malignant = len(data[data['diagnosis']=='M'])
+
+#Number of benign cases
+benign = len(data[data['diagnosis']=='B'])
+
+#Rate of malignant tumors over all cases
+rate = (float(malignant)/(length))*100
+
+print "There are " + str(len(data))+" cases in this dataset"
+print "There are {}".format(features)+" features in this dataset"
+print "There are {}".format(malignant)+" cases diagnosed as malignant tumor"
+print "There are {}".format(benign)+" cases diagnosed as benign tumor"
+print "The percentage of malignant cases is: {:.4f}%".format(rate)
+
+df=pd.DataFrame(data)
+
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(1)
+for i in range(1):
+    x=df['perimeter_mean']
+    y=df['area_worst']
+    ax.scatter(x,y, label=str(i))
+#ax.legend()
+ax.set_title('Correlation of perimeter_mean and area_worst with correlation .99 or r-square= .81')
+fig.savefig('scatter.png')
+
+fig, ax = plt.subplots(1)
+for i in range(1):
+    x=df['concavity_mean']
+    y=df['compactness_worst']
+    ax.scatter(x,y, label=str(i))
+#ax.legend()
+ax.set_title('Correlation of the mean of concavity and worst compactness')
+fig.savefig('scatter.png')
